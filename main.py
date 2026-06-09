@@ -7,8 +7,9 @@ from aiogram.filters import Command
 TOKEN = "8931007305:AAGewyuIKAX_pt2YxzpWj9WYP1lMD5i6XdM" 
 WEB_APP_URL = "https://myshop-sooty-tau.vercel.app" 
 
-# !!! ОБЯЗАТЕЛЬНО: Впиши сюда свой ID из @userinfobot вместо этих цифр:
-MANAGER_ID = 123456789  
+# Данные менеджера (Ярослав)
+MANAGER_ID = 8940897499  
+MANAGER_USERNAME = "vk6996"
 # ============================
 
 bot = Bot(token=TOKEN)
@@ -32,15 +33,33 @@ async def handle_order(message: types.Message):
         
         username = f"@{user.username}" if user.username else user.first_name
         
-        order_text = (
-            f"🔔 ЧЕЛОВЕК СДЕЛАЛ ЗАКАЗ!\n\n"
+        # 1. Чек, который прилетает тебе в личку (от бота)
+        order_text_to_manager = (
+            f"🔔 НОВЫЙ ЗАКАЗ ИЗ МАГАЗИНА!\n\n"
             f"👤 Покупатель: {username} (ID: {user.id})\n"
-            f"📦 Товар: {data.get('item')}\n"
-            f"💰 Цена: {data.get('price')} ₸"
+            f"📝 Имя в заказе: {data.get('name')}\n"
+            f"📞 Телефон: {data.get('phone')}\n"
+            f"📍 Адрес доставки: {data.get('address')}\n"
+            f"💳 Способ оплаты: {data.get('payment')}\n\n"
+            f"📦 Состав заказа: {data.get('items')}\n"
+            f"💰 Сумма к оплате: {data.get('total')} ₸"
         )
+        await bot.send_message(chat_id=MANAGER_ID, text=order_text_to_manager)
         
-        await bot.send_message(chat_id=MANAGER_ID, text=order_text)
-        await message.answer("✅ Твой заказ отправлен менеджеру! Он свяжется с тобой в ближайшее время.")
+        # 2. Подробный чек, который видит сам КЛИЕНТ в чате с ботом
+        order_text_to_client = (
+            f"✅ Спасибо за заказ, {data.get('name')}!\n\n"
+            f"🧾 ВАШ ЗАКАЗ:\n"
+            f"───────────────────\n"
+            f"📦 Товары: {data.get('items')}\n"
+            f"💰 Итого: {data.get('total')} ₸\n"
+            f"💳 Оплата: {data.get('payment')}\n"
+            f"📍 Доставка: {data.get('address')}\n"
+            f"───────────────────\n\n"
+            f"Менеджер уже обрабатывает ваш заказ и свяжется с вами по номеру {data.get('phone')}.\n\n"
+            f"👨‍💻 По всем вопросам пишите менеджеру: @{MANAGER_USERNAME}"
+        )
+        await message.answer(order_text_to_client)
 
 async def main():
     print("Бот успешно запущен и ждет заказов...")
@@ -48,4 +67,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-  
+    
