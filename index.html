@@ -6,69 +6,26 @@
     <title>Vape Shop</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { font-family: sans-serif; background-color: #131416; color: #ffffff; margin: 0; padding: 15px; }
-        h2 { text-align: center; margin-bottom: 20px; }
-        .products-grid { display: grid; gap: 15px; margin-bottom: 80px; }
-        .product-card { background: #1c1d22; border-radius: 12px; padding: 15px; border: 1px solid #2d2f36; }
-        .product-title { font-weight: bold; margin-bottom: 5px; font-size: 18px; }
-        .product-price { color: #00e676; margin-bottom: 15px; font-size: 16px; font-weight: bold; }
-        .flavor-select { width: 100%; padding: 10px; background: #242529; color: #fff; border: 1px solid #3d3f47; border-radius: 8px; margin-bottom: 10px; }
-        .btn-add { width: 100%; padding: 12px; background: #00e676; color: #000; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
-        .cart-btn { position: fixed; bottom: 15px; left: 15px; right: 15px; background: #00e676; color: #000; padding: 15px; border-radius: 10px; text-align: center; font-weight: bold; display: none; }
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #131416; display: none; padding: 20px; box-sizing: border-box; overflow-y: auto; }
-        .form-group { margin-bottom: 15px; }
-        .form-group input { width: 100%; padding: 12px; background: #1c1d22; border: 1px solid #2d2f36; color: #fff; border-radius: 8px; box-sizing: border-box; }
-        .btn-submit { width: 100%; padding: 15px; background: #00e676; border: none; border-radius: 10px; font-weight: bold; color: #000; }
+        body { font-family: sans-serif; background-color: #131416; color: #ffffff; padding: 20px; }
+        .product { background: #1c1d22; padding: 15px; border-radius: 10px; margin-bottom: 15px; }
+        input { width: 100%; padding: 10px; margin: 5px 0; border-radius: 5px; border: none; box-sizing: border-box; }
+        button { width: 100%; padding: 15px; background: #00e676; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 10px; }
     </style>
 </head>
 <body>
-
-    <h2>💨 Vape Shop</h2>
-
-    <div class="products-grid">
-        <div class="product-card">
-            <div class="product-title">Жижа Husky (Двойной лед)</div>
-            <div class="product-price">3500 ₸</div>
-            <select id="flavor1" class="flavor-select"><option>Киви-Мята</option><option>Тропик</option></select>
-            <button class="btn-add" onclick="addToCart('Husky', 3500, 'flavor1')">🛒 В корзину</button>
-        </div>
-        <div class="product-card">
-            <div class="product-title">Одноразка Lost Mary</div>
-            <div class="product-price">5500 ₸</div>
-            <select id="flavor2" class="flavor-select"><option>Черника</option><option>Арбуз</option></select>
-            <button class="btn-add" onclick="addToCart('Lost Mary', 5500, 'flavor2')">🛒 В корзину</button>
-        </div>
+    <h2>Магазин</h2>
+    <div class="product">
+        <p>Husky - 3500 ₸</p>
+        <button onclick="tg.sendData('Husky')">Заказать Husky</button>
     </div>
-
-    <div id="cart-badge" class="cart-btn" onclick="document.getElementById('modal').style.display='block'">
-        Посмотреть корзину (<span id="count">0</span>)
-    </div>
-
-    <div id="modal" class="modal">
-        <h3>🛒 Оформление заказа</h3>
-        <div class="form-group"><input type="text" id="name" placeholder="Имя"></div>
-        <div class="form-group"><input type="text" id="phone" placeholder="Телефон"></div>
-        <div class="form-group"><input type="text" id="addr" placeholder="Адрес"></div>
-        <button class="btn-submit" onclick="send()">✅ Подтвердить</button>
-        <button onclick="document.getElementById('modal').style.display='none'" style="margin-top:15px; background:none; border:none; color:red; width:100%;">Закрыть</button>
+    <div class="product">
+        <p>Lost Mary - 5500 ₸</p>
+        <button onclick="tg.sendData('Lost Mary')">Заказать Lost Mary</button>
     </div>
 
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
-        let cart = [];
-        function addToCart(n, p, s) { 
-            cart.push({name: n + ' (' + document.getElementById(s).value + ')', price: p});
-            document.getElementById('count').innerText = cart.length;
-            document.getElementById('cart-badge').style.display = 'block';
-        }
-        function send() {
-            tg.sendData(JSON.stringify({
-                name: document.getElementById('name').value,
-                phone: document.getElementById('phone').value,
-                cart: cart
-            }));
-        }
     </script>
 </body>
 </html>
