@@ -6,46 +6,61 @@
     <title>Vape Shop</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { font-family: sans-serif; background-color: #131416; color: #ffffff; padding: 20px; }
-        .product { background: #1c1d22; padding: 15px; border-radius: 10px; margin-bottom: 15px; border: 1px solid #333; }
-        select { width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; background: #2b2d31; color: white; border: none; }
-        button { width: 100%; padding: 15px; background: #00e676; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; color: #000; }
+        body { font-family: sans-serif; background-color: #131416; color: #fff; padding: 20px; }
+        .product { background: #1c1d22; padding: 15px; border-radius: 10px; margin-bottom: 15px; }
+        select, input { width: 100%; padding: 10px; margin: 5px 0; border-radius: 5px; background: #2b2d31; color: white; border: 1px solid #444; }
+        .btn-add { background: #00e676; color: #000; border: none; padding: 10px; width: 100%; border-radius: 5px; font-weight: bold; }
+        .btn-order { background: #2979ff; color: #fff; border: none; padding: 15px; width: 100%; border-radius: 10px; margin-top: 20px; font-weight: bold; }
+        #cart-info { margin-top: 20px; border-top: 1px solid #444; padding-top: 10px; }
     </style>
 </head>
 <body>
     <h2>Магазин</h2>
     
     <div class="product">
-        <p>Husky - 3500 ₸</p>
-        <select id="flavor1">
-            <option>Двойной лед</option>
-            <option>Тропик</option>
-        </select>
-        <button onclick="order('Husky', 'flavor1', 3500)">Заказать Husky</button>
+        <p>Husky (3500 ₸)</p>
+        <select id="flavor1"><option>Двойной лед</option><option>Тропик</option></select>
+        <button class="btn-add" onclick="addToCart('Husky', 'flavor1', 3500)">Добавить в корзину</button>
     </div>
 
     <div class="product">
-        <p>Lost Mary - 5500 ₸</p>
-        <select id="flavor2">
-            <option>Черника</option>
-            <option>Арбуз</option>
-        </select>
-        <button onclick="order('Lost Mary', 'flavor2', 5500)">Заказать Lost Mary</button>
+        <p>Lost Mary (5500 ₸)</p>
+        <select id="flavor2"><option>Черника</option><option>Арбуз</option></select>
+        <button class="btn-add" onclick="addToCart('Lost Mary', 'flavor2', 5500)">Добавить в корзину</button>
+    </div>
+
+    <div id="cart-info">
+        <h3>Ваша корзина:</h3>
+        <ul id="cart-list"></ul>
+        <input type="text" id="name" placeholder="Имя">
+        <input type="text" id="phone" placeholder="Телефон">
+        <input type="text" id="addr" placeholder="Адрес">
+        <button class="btn-order" onclick="submitOrder()">✅ Оформить заказ</button>
     </div>
 
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
+        let cart = [];
 
-        function order(name, flavorId, price) {
+        function addToCart(name, flavorId, price) {
             let flavor = document.getElementById(flavorId).value;
-            let data = {
-                product: name,
-                flavor: flavor,
-                price: price
+            cart.push({name: name, flavor: flavor, price: price});
+            let li = document.createElement('li');
+            li.textContent = `${name} (${flavor}) - ${price} ₸`;
+            document.getElementById('cart-list').appendChild(li);
+        }
+
+        function submitOrder() {
+            let orderData = {
+                items: cart,
+                client: {
+                    name: document.getElementById('name').value,
+                    phone: document.getElementById('phone').value,
+                    addr: document.getElementById('addr').value
+                }
             };
-            // Отправляем данные в бота и закрываем окно
-            tg.sendData(JSON.stringify(data));
+            tg.sendData(JSON.stringify(orderData));
         }
     </script>
 </body>
