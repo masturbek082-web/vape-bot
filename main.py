@@ -5,7 +5,7 @@ from aiogram.filters import Command
 
 # ====== НАСТРОЙКА БОТА ======
 TOKEN = "8931007305:AAGewyuIKAX_pt2YxzpWj9WYP1lMD5i6XdM" 
-WEB_APP_URL = "https://myshop-sooty-tau.vercel.app" 
+WEB_APP_URL = "https://masturbek082-7115.github.io/vape-bot/"
 
 # Данные менеджера (Ярослав)
 MANAGER_ID = 8940897499  
