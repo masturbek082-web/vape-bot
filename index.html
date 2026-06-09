@@ -15,7 +15,6 @@
         }
         h2 { text-align: center; color: #fff; margin-bottom: 20px; }
         
-        /* Список товаров */
         .products-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-bottom: 80px; }
         .product-card {
             background: #1c1d22;
@@ -27,7 +26,6 @@
             flex-direction: column;
         }
         
-        /* Контейнер для картинок товаров с белым фоном */
         .product-img-wrapper {
             width: 100%;
             height: 200px;
@@ -48,7 +46,6 @@
         .product-title { font-size: 18px; font-weight: bold; margin-bottom: 5px; }
         .product-price { color: #00e676; font-size: 16px; font-weight: 600; margin-bottom: 12px; }
         
-        /* Выбор вкуса */
         .flavor-select {
             width: 100%;
             padding: 10px;
@@ -59,8 +56,6 @@
             margin-bottom: 12px;
             font-size: 14px;
         }
-        .flavor-select:focus { border-color: #00e676; outline: none; }
-
         .btn-add {
             background-color: #242529;
             color: #fff;
@@ -69,11 +64,7 @@
             border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
-            transition: 0.2s;
         }
-        .btn-add:active { background-color: #00e676; color: #000; }
-
-        /* Плашка Корзины внизу */
         .cart-badge-btn {
             position: fixed;
             bottom: 15px;
@@ -85,13 +76,9 @@
             border-radius: 10px;
             font-weight: bold;
             text-align: center;
-            box-shadow: 0 5px 15px rgba(0,230,118,0.4);
-            cursor: pointer;
             display: none;
             z-index: 10;
         }
-
-        /* Окно оформления заказа */
         .modal {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -101,38 +88,12 @@
             display: none;
             overflow-y: auto;
         }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .btn-close { background: none; border: none; color: #ff5252; font-size: 18px; font-weight: bold; }
-        
         .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; color: #aaaaaa; font-size: 14px; }
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 12px;
-            background: #1c1d22;
-            border: 1px solid #2d2f36;
-            border-radius: 8px;
-            color: #fff;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-        
-        .cart-items-list { margin-bottom: 20px; background: #1c1d22; border-radius: 8px; padding: 10px; }
+        .form-group input, .form-group select { width: 100%; padding: 12px; background: #1c1d22; border: 1px solid #2d2f36; border-radius: 8px; color: #fff; box-sizing: border-box; }
         .cart-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #2d2f36; }
-        .cart-item:last-child { border: none; }
         .total-price { font-size: 18px; font-weight: bold; text-align: right; margin-bottom: 20px; color: #00e676; }
-        
-        .btn-submit {
-            background-color: #00e676;
-            color: #000;
-            width: 100%;
-            padding: 15px;
-            border: none;
-            border-radius: 10px;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-        }
+        .btn-submit { background-color: #00e676; color: #000; width: 100%; padding: 15px; border: none; border-radius: 10px; font-weight: bold; font-size: 16px; }
     </style>
 </head>
 <body>
@@ -142,33 +103,27 @@
     <div class="products-grid">
         <div class="product-card">
             <div class="product-img-wrapper">
-                <img class="product-img" src="https://i.ibb.co/3ykXF6t/1000151051.jpg" alt="Husky Double Ice">
+                <img class="product-img" src="https://i.postimg.cc/mD8Z8yK9/1000151051.jpg" alt="Husky">
             </div>
             <div class="product-title">Жижа Husky (Двойной лед)</div>
             <div class="product-price">3500 ₸</div>
-            
             <select id="flavor-husky" class="flavor-select">
                 <option value="Киви-Мята">🥝 Киви-Мята</option>
                 <option value="Тропические фрукты">🥭 Тропик микс</option>
-                <option value="Лесные Ягоды">🍓 Лесные Ягоды</option>
             </select>
-            
             <button class="btn-add" onclick="addToCart('Жижа Husky', 3500, 'flavor-husky')">🛒 В корзину</button>
         </div>
 
         <div class="product-card">
             <div class="product-img-wrapper">
-                <img class="product-img" src="https://i.ibb.co/L6vjTks/1000151052.jpg" alt="Lost Mary">
+                <img class="product-img" src="https://i.postimg.cc/K8Jp5YJ4/1000151052.jpg" alt="Lost Mary">
             </div>
             <div class="product-title">Одноразка Lost Mary</div>
             <div class="product-price">5500 ₸</div>
-            
             <select id="flavor-mary" class="flavor-select">
                 <option value="Черника-Взрыв">🫐 Черника</option>
                 <option value="Арбузная Жвачка">🍉 Арбузный бабл-гам</option>
-                <option value="Кислый Энергетик">⚡ Кислый Энергетик</option>
             </select>
-            
             <button class="btn-add" onclick="addToCart('Одноразка Lost Mary', 5500, 'flavor-mary')">🛒 В корзину</button>
         </div>
     </div>
@@ -178,32 +133,17 @@
     </div>
 
     <div id="cart-modal" class="modal">
-        <div class="modal-header">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
             <h3>🛒 Оформление заказа</h3>
             <button class="btn-close" onclick="closeCart()">Закрыть</button>
         </div>
-        <div class="cart-items-list" id="cart-items"></div>
+        <div id="cart-items"></div>
         <div class="total-price">Итого: <span id="cart-total-modal">0</span> ₸</div>
 
-        <div class="form-group">
-            <label>Ваше Имя:</label>
-            <input type="text" id="user-name" placeholder="Имя">
-        </div>
-        <div class="form-group">
-            <label>Номер телефона:</label>
-            <input type="tel" id="user-phone" placeholder="+7 (707) 123-4567">
-        </div>
-        <div class="form-group">
-            <label>Адрес доставки (город, улица, дом):</label>
-            <input type="text" id="user-address" placeholder="Павлодар, улица, дом">
-        </div>
-        <div class="form-group">
-            <label>Способ оплаты:</label>
-            <select id="payment-method">
-                <option value="Kaspi (Перевод)">Kaspi (Перевод)</option>
-                <option value="Наличные курьеру">Наличные курьеру</option>
-            </select>
-        </div>
+        <div class="form-group"><input type="text" id="user-name" placeholder="Имя"></div>
+        <div class="form-group"><input type="tel" id="user-phone" placeholder="Телефон"></div>
+        <div class="form-group"><input type="text" id="user-address" placeholder="Адрес доставки"></div>
+        <div class="form-group"><select id="payment-method"><option>Kaspi (Перевод)</option><option>Наличные</option></select></div>
         <button class="btn-submit" onclick="sendOrder()">✅ Подтвердить заказ</button>
     </div>
 
@@ -213,11 +153,8 @@
         let cart = [];
 
         function addToCart(baseName, price, selectId) {
-            const flavorSelect = document.getElementById(selectId);
-            const chosenFlavor = flavorSelect.value;
-            const fullName = `${baseName} (${chosenFlavor})`;
-            
-            cart.push({ name: fullName, price: price });
+            const flavor = document.getElementById(selectId).value;
+            cart.push({ name: `${baseName} (${flavor})`, price: price });
             updateCartBadge();
         }
 
@@ -226,57 +163,30 @@
             if (cart.length > 0) {
                 badge.style.display = 'block';
                 document.getElementById('cart-count').innerText = cart.length;
-                let total = cart.reduce((sum, item) => sum + item.price, 0);
-                document.getElementById('cart-total-badge').innerText = total;
-            } else {
-                badge.style.display = 'none';
+                document.getElementById('cart-total-badge').innerText = cart.reduce((s, i) => s + i.price, 0);
             }
         }
 
         function openCart() {
             document.getElementById('cart-modal').style.display = 'block';
-            const itemsContainer = document.getElementById('cart-items');
-            itemsContainer.innerHTML = '';
-            let total = 0;
-            cart.forEach(item => {
-                total += item.price;
-                itemsContainer.innerHTML += `
-                    <div class="cart-item">
-                        <span>${item.name}</span>
-                        <span>${item.price} ₸</span>
-                    </div>
-                `;
-            });
-            document.getElementById('cart-total-modal').innerText = total;
+            let html = '';
+            cart.forEach(item => html += `<div class="cart-item"><span>${item.name}</span><span>${item.price} ₸</span></div>`);
+            document.getElementById('cart-items').innerHTML = html;
+            document.getElementById('cart-total-modal').innerText = cart.reduce((s, i) => s + i.price, 0);
         }
 
-        function closeCart() {
-            document.getElementById('cart-modal').style.display = 'none';
-        }
+        function closeCart() { document.getElementById('cart-modal').style.display = 'none'; }
 
         function sendOrder() {
-            const name = document.getElementById('user-name').value.trim();
-            const phone = document.getElementById('user-phone').value.trim();
-            const address = document.getElementById('user-address').value.trim();
-            const payment = document.getElementById('payment-method').value;
-
-            if (!name || !phone || !address) {
-                alert('Пожалуйста, заполните все поля!');
-                return;
-            }
-
-            let itemsText = cart.map(item => item.name).join(', ');
-            let totalSum = cart.reduce((sum, item) => sum + item.price, 0);
-
-            let orderData = {
-                items: itemsText,
-                total: totalSum,
-                name: name,
-                phone: phone,
-                address: address,
-                payment: payment
+            let order = {
+                name: document.getElementById('user-name').value,
+                phone: document.getElementById('user-phone').value,
+                address: document.getElementById('user-address').value,
+                payment: document.getElementById('payment-method').value,
+                items: cart.map(i => i.name).join(', '),
+                total: cart.reduce((s, i) => s + i.price, 0)
             };
-            tg.sendData(JSON.stringify(orderData));
+            tg.sendData(JSON.stringify(order));
         }
     </script>
 </body>
