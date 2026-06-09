@@ -25,10 +25,42 @@
             border: 1px solid #2d2f36;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
         }
+        
+        /* Контейнер для картинок товаров с белым фоном */
+        .product-img-wrapper {
+            width: 100%;
+            height: 200px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        .product-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
         .product-title { font-size: 18px; font-weight: bold; margin-bottom: 5px; }
-        .product-price { color: #00e676; font-size: 16px; font-weight: 600; margin-bottom: 15px; }
+        .product-price { color: #00e676; font-size: 16px; font-weight: 600; margin-bottom: 12px; }
+        
+        /* Выбор вкуса */
+        .flavor-select {
+            width: 100%;
+            padding: 10px;
+            background: #242529;
+            border: 1px solid #3d3f47;
+            border-radius: 8px;
+            color: #fff;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+        .flavor-select:focus { border-color: #00e676; outline: none; }
+
         .btn-add {
             background-color: #242529;
             color: #fff;
@@ -50,191 +82,5 @@
             background-color: #00e676;
             color: #000;
             padding: 15px;
-            border-radius: 10px;
-            font-weight: bold;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,230,118,0.4);
-            cursor: pointer;
-            display: none;
-            z-index: 10;
-        }
-
-        /* Окно оформления заказа */
-        .modal {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #131416;
-            z-index: 20;
-            padding: 20px;
-            display: none;
-            overflow-y: auto;
-        }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .btn-close { background: none; border: none; color: #ff5252; font-size: 18px; font-weight: bold; }
-        
-        /* Форма ввода */
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; color: #aaaaaa; font-size: 14px; }
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 12px;
-            background: #1c1d22;
-            border: 1px solid #2d2f36;
-            border-radius: 8px;
-            color: #fff;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-        .form-group input:focus { border-color: #00e676; outline: none; }
-        
-        .cart-items-list { margin-bottom: 20px; background: #1c1d22; border-radius: 8px; padding: 10px; }
-        .cart-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #2d2f36; }
-        .cart-item:last-child { border: none; }
-        .total-price { font-size: 18px; font-weight: bold; text-align: right; margin-bottom: 20px; color: #00e676; }
-        
-        .btn-submit {
-            background-color: #00e676;
-            color: #000;
-            width: 100%;
-            padding: 15px;
-            border: none;
-            border-radius: 10px;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-
-    <h2>💨 Vape Shop</h2>
-
-    <div class="products-grid">
-        <div class="product-card">
-            <div>
-                <div class="product-title">Жижа Husky (Двойной лед)</div>
-                <div class="product-price">3500 ₸</div>
-            </div>
-            <button class="btn-add" onclick="addToCart('Жижа Husky (Двойной лед)', 3500)">🛒 В корзину</button>
-        </div>
-
-        <div class="product-card">
-            <div>
-                <div class="product-title">Одноразка Lost Mary</div>
-                <div class="product-price">5500 ₸</div>
-            </div>
-            <button class="btn-add" onclick="addToCart('Одноразка Lost Mary', 5500)">🛒 В корзину</button>
-        </div>
-    </div>
-
-    <div id="cart-badge" class="cart-badge-btn" onclick="openCart()">
-        Посмотреть корзину (<span id="cart-count">0</span>) — <span id="cart-total-badge">0</span> ₸
-    </div>
-
-    <div id="cart-modal" class="modal">
-        <div class="modal-header">
-            <h3>🛒 Оформление заказа</h3>
-            <button class="btn-close" onclick="closeCart()">Закрыть</button>
-        </div>
-
-        <div class="cart-items-list" id="cart-items">
-            </div>
-
-        <div class="total-price">Итого: <span id="cart-total-modal">0</span> ₸</div>
-
-        <div class="form-group">
-            <label>Ваше Имя:</label>
-            <input type="text" id="user-name" placeholder="Имя">
-        </div>
-        <div class="form-group">
-            <label>Номер телефона:</label>
-            <input type="tel" id="user-phone" placeholder="+7 (707) 123-4567">
-        </div>
-        <div class="form-group">
-            <label>Адрес доставки (город, улица, дом):</label>
-            <input type="text" id="user-address" placeholder="Павлодар, улица, дом">
-        </div>
-        <div class="form-group">
-            <label>Способ оплаты:</label>
-            <select id="payment-method">
-                <option value="Kaspi (Перевод)">Kaspi (Перевод)</option>
-                <option value="Наличные курьеру">Наличные курьеру</option>
-            </select>
-        </div>
-
-        <button class="btn-submit" onclick="sendOrder()">✅ Подтвердить заказ</button>
-    </div>
-
-    <script>
-        let tg = window.Telegram.WebApp;
-        tg.expand();
-
-        let cart = [];
-
-        function addToCart(name, price) {
-            cart.push({ name: name, price: price });
-            updateCartBadge();
-        }
-
-        function updateCartBadge() {
-            const badge = document.getElementById('cart-badge');
-            if (cart.length > 0) {
-                badge.style.display = 'block';
-                document.getElementById('cart-count').innerText = cart.length;
-                let total = cart.reduce((sum, item) => sum + item.price, 0);
-                document.getElementById('cart-total-badge').innerText = total;
-            } else {
-                badge.style.display = 'none';
-            }
-        }
-
-        function openCart() {
-            document.getElementById('cart-modal').style.display = 'block';
-            const itemsContainer = document.getElementById('cart-items');
-            itemsContainer.innerHTML = '';
+            border-
             
-            let total = 0;
-            cart.forEach(item => {
-                total += item.price;
-                itemsContainer.innerHTML += `
-                    <div class="cart-item">
-                        <span>${item.name}</span>
-                        <span>${item.price} ₸</span>
-                    </div>
-                `;
-            });
-            document.getElementById('cart-total-modal').innerText = total;
-        }
-
-        function closeCart() {
-            document.getElementById('cart-modal').style.display = 'none';
-        }
-
-        function sendOrder() {
-            const name = document.getElementById('user-name').value.trim();
-            const phone = document.getElementById('user-phone').value.trim();
-            const address = document.getElementById('user-address').value.trim();
-            const payment = document.getElementById('payment-method').value;
-
-            if (!name || !phone || !address) {
-                alert('Пожалуйста, заполните все поля!');
-                return;
-            }
-
-            let itemsText = cart.map(item => item.name).join(', ');
-            let totalSum = cart.reduce((sum, item) => sum + item.price, 0);
-
-            let orderData = {
-                items: itemsText,
-                total: totalSum,
-                name: name,
-                phone: phone,
-                address: address,
-                payment: payment
-            };
-
-            tg.sendData(JSON.stringify(orderData));
-        }
-    </script>
-</body>
-</html>
