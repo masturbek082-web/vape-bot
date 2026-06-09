@@ -7,25 +7,46 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body { font-family: sans-serif; background-color: #131416; color: #ffffff; padding: 20px; }
-        .product { background: #1c1d22; padding: 15px; border-radius: 10px; margin-bottom: 15px; }
-        input { width: 100%; padding: 10px; margin: 5px 0; border-radius: 5px; border: none; box-sizing: border-box; }
-        button { width: 100%; padding: 15px; background: #00e676; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .product { background: #1c1d22; padding: 15px; border-radius: 10px; margin-bottom: 15px; border: 1px solid #333; }
+        select { width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; background: #2b2d31; color: white; border: none; }
+        button { width: 100%; padding: 15px; background: #00e676; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; color: #000; }
     </style>
 </head>
 <body>
     <h2>Магазин</h2>
+    
     <div class="product">
         <p>Husky - 3500 ₸</p>
-        <button onclick="tg.sendData('Husky')">Заказать Husky</button>
+        <select id="flavor1">
+            <option>Двойной лед</option>
+            <option>Тропик</option>
+        </select>
+        <button onclick="order('Husky', 'flavor1', 3500)">Заказать Husky</button>
     </div>
+
     <div class="product">
         <p>Lost Mary - 5500 ₸</p>
-        <button onclick="tg.sendData('Lost Mary')">Заказать Lost Mary</button>
+        <select id="flavor2">
+            <option>Черника</option>
+            <option>Арбуз</option>
+        </select>
+        <button onclick="order('Lost Mary', 'flavor2', 5500)">Заказать Lost Mary</button>
     </div>
 
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
+
+        function order(name, flavorId, price) {
+            let flavor = document.getElementById(flavorId).value;
+            let data = {
+                product: name,
+                flavor: flavor,
+                price: price
+            };
+            // Отправляем данные в бота и закрываем окно
+            tg.sendData(JSON.stringify(data));
+        }
     </script>
 </body>
 </html>
