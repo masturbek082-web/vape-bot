@@ -7,21 +7,19 @@ import json
 TOKEN = '8931007305:AAGewyuIKAX_pt2YxzpWj9WYP1lMD5i6XdM'
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
-URL = 'https://myshop-sooty-tau.vercel.app'
 
 @dp.message(Command("start"))
 async def start(message: types.Message):
-    web_app = WebAppInfo(url=URL)
-    btn = InlineKeyboardButton(text="🛒 Открыть магазин", web_app=web_app)
+    web_app = WebAppInfo(url='https://myshop-sooty-tau.vercel.app')
+    btn = InlineKeyboardButton(text="🛒 Открыть", web_app=web_app)
     kb = InlineKeyboardMarkup(inline_keyboard=[[btn]])
-    await message.answer("Магазин открыт!", reply_markup=kb)
+    await message.answer("Жми кнопку:", reply_markup=kb)
 
 @dp.message()
-async def handle_data(message: types.Message):
-    # Эта часть ловит данные, когда ты нажимаешь кнопку в WebApp
+async def echo(message: types.Message):
     if message.web_app_data:
         data = json.loads(message.web_app_data.data)
-        await message.answer(f"✅ ЗАКАЗ!\nТовар: {data['item']}\nИмя: {data['name']}\nТел: {data['phone']}")
+        await message.answer(f"Заказ принят!\nИмя: {data['name']}\nТелефон: {data['phone']}")
 
 async def main():
     await dp.start_polling(bot)
