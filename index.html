@@ -7,20 +7,19 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body { font-family: sans-serif; background: #131416; color: #fff; padding: 20px; }
-        .item { background: #1c1d22; padding: 15px; border-radius: 10px; margin-bottom: 10px; }
-        input, select { width: 100%; padding: 10px; margin: 5px 0; border-radius: 5px; border: none; background: #2b2d31; color: white; }
-        button { width: 100%; padding: 15px; background: #00e676; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        .product { background: #1c1d22; padding: 15px; border-radius: 10px; margin-bottom: 10px; }
+        input { width: 100%; padding: 10px; margin: 5px 0; border-radius: 5px; border: none; background: #2b2d31; color: white; }
+        button { width: 100%; padding: 15px; background: #00e676; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; color: #000; }
     </style>
 </head>
 <body>
     <h2>Магазин</h2>
-    <div class="item">
+    <div class="product">
         <p>Husky - 3500 ₸</p>
-        <select id="flavor"><option>Тропик</option><option>Лед</option></select>
     </div>
     
-    <input type="text" id="name" placeholder="Твое имя">
-    <input type="text" id="phone" placeholder="Твой телефон">
+    <input type="text" id="name" placeholder="Имя">
+    <input type="text" id="phone" placeholder="Телефон">
     <button onclick="sendOrder()">Оформить заказ</button>
 
     <script>
@@ -30,7 +29,6 @@
         function sendOrder() {
             let name = document.getElementById('name').value;
             let phone = document.getElementById('phone').value;
-            let flavor = document.getElementById('flavor').value;
 
             if (name === "" || phone === "") {
                 alert("Заполни имя и телефон!");
@@ -40,10 +38,11 @@
             let data = {
                 name: name,
                 phone: phone,
-                flavor: flavor,
                 item: "Husky"
             };
             
+            // Если кнопка не работает, значит Telegram блокирует выполнение.
+            // Эта функция должна закрыть окно и отправить данные в бота.
             tg.sendData(JSON.stringify(data));
         }
     </script>
