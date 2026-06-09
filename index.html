@@ -1,26 +1,39 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Shop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vape Shop</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        :root { --tg-bg-color: #1c1c1e; --accent: #00ff88; }
+        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #121212; color: white; margin: 0; padding: 20px; }
+        h2 { text-align: center; margin-bottom: 20px; color: var(--accent); }
+        .card { background: #1e1e1e; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: none; background: #2a2a2a; color: white; box-sizing: border-box; }
+        button { width: 100%; padding: 15px; border-radius: 10px; border: none; background: var(--accent); color: #000; font-weight: bold; font-size: 16px; margin-top: 10px; cursor: pointer; transition: 0.3s; }
+        button:active { transform: scale(0.98); }
+    </style>
 </head>
 <body>
-    <input type="text" id="name" placeholder="Имя">
-    <input type="text" id="phone" placeholder="Телефон">
-    <button id="mainButton" onclick="sendOrder()">Оформить заказ</button>
+    <h2>VAPE SHOP</h2>
+    <div class="card">
+        <input type="text" id="name" placeholder="Твое имя">
+        <input type="tel" id="phone" placeholder="Телефон (+7...)">
+        <button onclick="sendOrder()">ОФОРМИТЬ ЗАКАЗ</button>
+    </div>
 
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
+        tg.enableClosingConfirmation(); // Чтобы случайно не закрыть
 
         function sendOrder() {
             let n = document.getElementById('name').value;
             let p = document.getElementById('phone').value;
 
-            if (n === "" || p === "") {
-                alert("Заполни поля!");
+            if (n.length < 2 || p.length < 5) {
+                alert("Заполни данные корректно!");
                 return;
             }
 
